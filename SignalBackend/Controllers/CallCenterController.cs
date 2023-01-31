@@ -1,6 +1,7 @@
 ﻿using Contracts;
 using Microsoft.AspNetCore.Mvc;
 using Models;
+using SignalBackend.SignalR;
 
 namespace SignalBackend.Controllers
 {
@@ -9,13 +10,16 @@ namespace SignalBackend.Controllers
 	public class CallCenterController : ControllerBase
 	{
 		private readonly ITicketManagement _ticketContract;
-		public CallCenterController(ITicketManagement ticket)
+		private readonly ITicketHub _tickethubinho;
+
+		public CallCenterController(ITicketManagement ticket, ITicketHub tickethubinho)
 		{
 			_ticketContract = ticket;
+			_tickethubinho = tickethubinho;
 		}
 
 		[HttpGet]
-		public bool Get(string username, string seconds)
+		public bool Get(string username, string seconds, CancellationToken ct)
 		{
 			if (Int32.TryParse(seconds, out int secondsParsed))
 			{
