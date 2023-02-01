@@ -3,6 +3,7 @@ using Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -25,6 +26,23 @@ namespace Business
 			else
 			{
 				return false;
+			}
+		}
+
+		public async IAsyncEnumerable<string> BusinessGetStatus([EnumeratorCancellation]
+		CancellationToken cancellationToken)
+		{
+			var i = 1;
+			while (!cancellationToken.IsCancellationRequested)
+			{
+				cancellationToken.ThrowIfCancellationRequested();
+				// run forever
+				if (i % 2 == 0)
+				{
+					yield return $"update asset";
+				}
+				await Task.Delay(1000, cancellationToken);
+				i++;
 			}
 		}
 	}

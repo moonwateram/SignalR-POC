@@ -10,12 +10,10 @@ namespace SignalBackend.Controllers
 	public class CallCenterController : ControllerBase
 	{
 		private readonly ITicketManagement _ticketContract;
-		private readonly ITicketHub _tickethubinho;
 
-		public CallCenterController(ITicketManagement ticket, ITicketHub tickethubinho)
+		public CallCenterController(ITicketManagement ticket)
 		{
 			_ticketContract = ticket;
-			_tickethubinho = tickethubinho;
 		}
 
 		[HttpGet]

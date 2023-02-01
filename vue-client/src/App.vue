@@ -4,7 +4,6 @@ import { RouterView } from "vue-router";
 
 <template>
   <div class="container">
-    <div>SignalR and friends</div>
     <RouterView />
   </div>
 </template>

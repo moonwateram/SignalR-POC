@@ -6,8 +6,8 @@ import { onMounted } from "vue";
 const seconds = ref(1);
 const username = ref("Jonh");
 
-let showMessage = ref("No message yet");
-let showMessage2 = ref("No message yet");
+let showMessage = ref("client > server > client");
+let showMessage2 = ref("server > client");
 
 let connectionstream = new signalR.HubConnectionBuilder()
   .withUrl("https://localhost:7183/tickethub/streaming")
@@ -25,6 +25,7 @@ onMounted(async () => {
   connectionstream.stream("TriggerStream", 5).subscribe({
     next: (item) => {
       console.log(item);
+      showMessage2.value = item;
     },
     complete: () => {
       console.log("completed");
@@ -36,7 +37,7 @@ onMounted(async () => {
 
   connection.on("SendHelp", (user, message) => {
     console.log(message);
-    showMessage2.value = message;
+    showMessage.value = message;
   });
 });
 
@@ -48,7 +49,6 @@ function sendHelp() {
 </script>
 
 <template>
-  <div>First Component</div>
   <button @click="sendHelp">Help me</button>
   <br />
   <input v-model="seconds" placeholder="time in seconds" />
@@ -56,6 +56,8 @@ function sendHelp() {
   <input v-model="username" placeholder="Name" />
   <br />
   <p>{{ showMessage }}</p>
+  <br />
   <hr />
+  <br />
   <p>{{ showMessage2 }}</p>
 </template>
