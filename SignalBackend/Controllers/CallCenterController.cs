@@ -1,5 +1,6 @@
 ﻿using Contracts;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using Models;
 using SignalBackend.SignalR;
 
@@ -10,10 +11,12 @@ namespace SignalBackend.Controllers
 	public class CallCenterController : ControllerBase
 	{
 		private readonly ITicketManagement _ticketContract;
+		private readonly IHubContext<TicketHubContext> _hubContext;
 
-		public CallCenterController(ITicketManagement ticket)
+		public CallCenterController(ITicketManagement ticket, IHubContext<TicketHubContext> hubContext)
 		{
 			_ticketContract = ticket;
+			_hubContext = hubContext;
 		}
 
 		[HttpGet]
